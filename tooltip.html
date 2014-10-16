@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ToolTip</title>	
+		<style type="text/css">
+			body{
+				font-size: 14px;
+				line-height: 1.8;
+				font-family: "Microsoft YaHei","微软雅黑";
+				background: url(33.jpg) no-repeat center top;
+			}
+			#demo{
+				width: 500px;
+				margin: 30px auto;
+				padding: 20px 30px;
+				position: relative;
+				background-color: #fff;
+				border-radius: 10px;
+				box-shadow: 0 0 0 10px rgba(0,0,0,.2)
+			}
+			#demo h2{
+				color: #03f;
+			}
+			#demo .tooltip{
+				color: #03f;
+				cursor: help;
+			}
+			.tooltip-box{
+				display: block;
+				background: #fff;
+				line-height: 1.6;
+				border:1px solid #66ccff;
+				color: #333;
+				padding: 20px;
+				font-size: 12px;
+				border-radius: 5px;
+				overflow:auto;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="demo">
+			<h2>原生Javascript实现ToolTip效果</h2>
+			<div class="tooltip-box">sadsas </div>
+			<p>
+				ToolTip效果是非常常见的网页特效，它可以在用户将指针放置在控件上时为用户显示提示信息。
+				比如简称文字显示一行文字全称，例：<a class="tooltip" id="tooltip1">中国</a>，<a class="tooltip" id="tooltip2">NBA</a>
+				又比如<a class="tooltip" id="tooltip3">春晓</a>
+			</p>
+			<p>
+				Tooltip还可以用来显示图片，<a class="tooltip" id="tooltip4">图片</a>，带格式的内容:<a class="tooltip" id="tooltip5">资料</a>
+			</p>
+
+		</div>
+		<script type="text/javascript">
+			var tooltipboxclass="tooltip-box";
+			var isIE=navigator.userAgent.indexOf("MSIE")>-1;
+			function showtooltip(obj,id,html,width,height){
+				if(document.getElementById(id)==null){
+					var tooltipbox;
+					tooltipbox=document.createElement("div");
+					tooltipbox.className=tooltipboxclass;
+					tooltipbox.id=id;
+					tooltipbox.innerHTML=html;
+					obj.appendChild(tooltipbox);
+					tooltipbox.style.width=width? width+"px":"auto";
+					tooltipbox.style.height=height? height+"px":"auto";
+					if(!width && isIE){
+						tooltipbox.style.width=tooltipbox.offsetWidth;
+					}
+					tooltipbox.style.position="absolute";
+					tooltipbox.style.display="block";
+
+					var left=obj.offsetLeft;
+					var top=obj.offsetTop+20;
+					tooltipbox.style.left=left+"px";
+					tooltipbox.style.top=top+"px";
+
+					obj.onmouseleave=function(){
+						setTimeout(function(){
+						document.getElementById(id).style.display="none";
+						},300);
+					}
+				}
+				else{
+					document.getElementById(id).style.display="block";
+				}
+
+				}
+			var t1=document.getElementById("tooltip1");
+			var t2=document.getElementById("tooltip2");
+			var t3=document.getElementById("tooltip3");
+				t1.onmouseenter=function(){
+					showtooltip(this,"t1","中国人民共和国",200,100);
+				}
+				t2.onmouseenter=function(){
+					showtooltip(this,"t2",'<img src="90.jpg" width="500" />',520);
+				}
+				t3.onmouseenter=function(){
+					var _html='<iframe src="http://www.imooc.com/" width="480" height="300"></iframe>';
+					showtooltip(this,"t3",_html,500);
+				}
+
+
+		</script>
+	</body>
+</html>
